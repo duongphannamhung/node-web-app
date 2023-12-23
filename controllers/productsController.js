@@ -44,4 +44,22 @@ controller.show = async (req, res) => {
     res.render('product-list');
 }
 
+controller.showDetails = async (req, res) => {
+    let id = isNaN(req.params.id) ? 0 : parseInt(req.params.id);
+
+    let product = await models.Product.findOne({
+        attributes: ['id', 'name', 'stars', 'price', 'oldPrice', 'summary', 'description', 'specification'],
+        where: { id: id },
+        include: [{
+            model: models.Image,
+            attributes: ['name', 'imagePath']
+        }, {
+            model: models.Review,
+            attributes: ['id', 'review', 'stars'],
+        }]
+    });
+    res.locals.product = product;
+    res.render('product-detail');
+}
+
 module.exports = controller;
