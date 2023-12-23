@@ -5,6 +5,7 @@ const models = require('../models');
 controller.show = async (req, res) => {
     let category = isNaN(req.query.category) ? 0 : parseInt(req.query.category);
     let brand = isNaN(req.query.brand) ? 0 : parseInt(req.query.brand);
+    let tag = isNaN(req.query.tag) ? 0 : parseInt(req.query.tag);
 
     let categories = await models.Category.findAll({
         include: [{ model: models.Product }]
@@ -16,6 +17,11 @@ controller.show = async (req, res) => {
     });
     res.locals.brands = brands;
 
+    let tags = await models.Tag.findAll({
+        include: [{ model: models.Product }]
+    });
+    res.locals.tags = tags;
+
     let options = {
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice'],
         where: {}
@@ -25,6 +31,12 @@ controller.show = async (req, res) => {
     }
     if (brand > 0) {
         options.where.brandId = brand;
+    }
+    if (tag > 0) {
+        options.include = [{
+            model: models.Tag,
+            where: { id: tag },
+        }]
     }
 
     let products = await models.Product.findAll(options);
