@@ -8,6 +8,6 @@ sqlseedall:
 	sequelize db:seed:all
 
 merge:
-	export curr=$(git branch --show-current) && git add . && git commit -m $curr && git push
+	git add . && git commit -m $(curr) && git push && git switch main && git merge $(curr)
 
 .PHONY: sqlcreate sqlseedgen sqlseedall
