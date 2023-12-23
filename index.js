@@ -14,7 +14,7 @@ app.engine('hbs', expressHandlerbars.engine({
     defaultLayout: 'layout',
     runtimeOptions: {
         allowProtoPropertiesByDefault: true,
-        allowProtoMethodsByDefault: true,
+        allowProtoMethodsByDefault: true
     }
 }));
 
