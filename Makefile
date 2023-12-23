@@ -7,4 +7,7 @@ sqlseedgen:
 sqlseedall:
 	sequelize db:seed:all
 
+merge:
+	git add . && git commit -m $(curr) && git push && git switch main && git merge $(curr)
+
 .PHONY: sqlcreate sqlseedgen sqlseedall
