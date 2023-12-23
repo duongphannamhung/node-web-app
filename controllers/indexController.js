@@ -1,8 +1,18 @@
 'use strict';
 
 const controller = {};
+const models = require('../models');
 
-controller.showHomepage = (req, res) => {
+controller.showHomepage = async (req, res) => {
+    const categories = await models.Category.findAll();
+    const secondArray = categories.splice(2,2);
+    const thirdArray = categories.splice(1,1);
+    res.locals.categoryArray = [
+        categories,
+        secondArray,
+        thirdArray
+    ]
+
     res.render('index');
 }
 
