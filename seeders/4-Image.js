@@ -403,6 +403,10 @@ module.exports = {
       "name": "morbi vestibulum",
       "imagePath": "/img/product-3.png",
       "productId": 9
+    }, {
+      "name": "test",
+      "imagePath": "/img/product-1.png",
+      "productId": 2
     }];
 
     items.forEach(item => {
