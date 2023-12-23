@@ -27,6 +27,7 @@ app.set('view engine', 'hbs');
 
 // routes
 app.use('/', require('./routes/indexRouter'));
+app.use('/products', require('./routes/productRouter'));
 
 app.use((req, res, next) => {
     res.status(404).render('error', { message: 'Page Not Found'});
