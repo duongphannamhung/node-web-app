@@ -26,6 +26,8 @@ controller.show = async (req, res) => {
     });
     res.locals.tags = tags;
 
+    let page = isNaN(req.query.page) ? 1 : Math.max(1,parseInt(req.query.page));
+
     let options = {
         attributes: ['id', 'name', 'imagePath', 'stars', 'price', 'oldPrice'],
         where: {}
@@ -61,6 +63,18 @@ controller.show = async (req, res) => {
             break;
     }
 
+    const limit = 6;
+    options.limit = limit;
+    options.offset = limit * (page - 1);
+    let {rows,count} = await models.Product.findAndCountAll(options);
+
+    res.locals.pagination = {
+        page: page,
+        limit: limit,
+        totalRows: count,
+        queryParams:req.query
+    }
+
     res.locals.sort = sort;
     res.locals.originalUrl = removeParam("sort",req.originalUrl);
     if  (Object.keys(req.query).length == 0) {
@@ -68,7 +82,7 @@ controller.show = async (req, res) => {
     }
     
     let products = await models.Product.findAll(options);
-    res.locals.products = products;
+    res.locals.products = rows;
     res.render('product-list');
 }
 

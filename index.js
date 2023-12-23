@@ -6,6 +6,7 @@ const port = process.env.PORT || 6969;
 
 const expressHandlerbars = require('express-handlebars');
 const {createStarList} = require('./controllers/handlebarsHelper');
+const { createPagination } = require('express-handlebars-paginate');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -19,7 +20,8 @@ app.engine('hbs', expressHandlerbars.engine({
         allowProtoMethodsByDefault: true
     },
     helpers: {
-        createStarList: createStarList
+        createStarList: createStarList,
+        createPagination: createPagination,
     }
 }));
 
