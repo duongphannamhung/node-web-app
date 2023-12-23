@@ -13,7 +13,9 @@ controller.showHomepage = async (req, res) => {
         thirdArray
     ]
 
-    res.render('index');
+    const Brand = models.Brand;
+    const brands = await Brand.findAll();
+    res.render('index', { brands: brands });
 }
 
 controller.showPage = (req, res, next) => {
