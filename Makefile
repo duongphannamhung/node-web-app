@@ -10,4 +10,4 @@ sqlseedall:
 merge:
 	git add . && git commit -m "$(curr)" && git push && git switch main && git merge $(curr)
 
-.PHONY: sqlcreate sqlseedgen sqlseedall
+.PHONY: sqlcreate sqlseedgen sqlseedall merge
