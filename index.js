@@ -54,6 +54,7 @@ app.use((req,res,next) => {
 // routes
 app.use('/', require('./routes/indexRouter'));
 app.use('/products', require('./routes/productRouter'));
+app.use('/users', require('./routes/userRouter'));
 
 app.use((req, res, next) => {
     res.status(404).render('error', { message: 'Page Not Found'});
