@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "username",
-    "password": "password",
-    "database": "databasee",
-    "host": "host",
+    "username": "nodewebapppostgres",
+    "password": "iqrZESOazCFsXnAYm3oW6V35Uk4Xq9M5",
+    "database": "nodewebapppostgres",
+    "host": "dpg-cm7oomocmk4c738umhkg-a.singapore-postgres.render.com",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
