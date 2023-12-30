@@ -27,11 +27,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Email / Username</label>
-                                <input class="form-control" type="email" placeholder="username" name="email">
+                                <input class="form-control" type="email" placeholder="username" name="email" required pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$">
                             </div>
                             <div class="col-md-6">
                                 <label>Password</label>
-                                <input class="form-control" type="password" placeholder="password" name="password">
+                                <input class="form-control" type="password" placeholder="password" name="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters">
                             </div>
                             <div class="col-md-12">
                                 <div class="custom-control custom-checkbox">
