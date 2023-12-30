@@ -1,5 +1,4 @@
 {
-  "use_env_variable": "POSTGRESQL_URL",
   "development": {
     "username": "admin",
     "password": "admin",
@@ -15,10 +14,11 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "nodewebapppostgres",
-    "password": "iqrZESOazCFsXnAYm3oW6V35Uk4Xq9M5",
-    "database": "nodewebapppostgres",
-    "host": "dpg-cm7oomocmk4c738umhkg-a.singapore-postgres.render.com",
+    "use_env_variable": "POSTGRESQL_URL",
+    "username": "POSTGRES_USERNAME",
+    "password": "POSTGRES_PASSWORD",
+    "database": "POSTGRES_DATABASE",
+    "host": "POSTGRES_HOST",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
