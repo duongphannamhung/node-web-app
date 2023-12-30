@@ -13,6 +13,20 @@ const redisStore = require('connect-redis').default;
 const {createClient} = require('redis');
 const redisClient = createClient({
     url : process.env.REDIS_URL,
+    socket: {
+        connectTimeout: 5000,
+        reconnectStrategy: (retries) => {
+            if (retries > 10) {
+                console.log("Too many retries on REDIS. Connection Terminated");
+                return new Error("Too many retries.");
+            } else {
+                const wait = Math.min(100 * Math.pow(2, retries), 60000);
+                console.log("waiting", wait, "milliseconds");
+                return wait;
+            }
+        }
+    }
+
 });
 
 redisClient.connect().catch(console.error);

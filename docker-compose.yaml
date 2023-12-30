@@ -15,5 +15,17 @@ services:
         - pgdata:/var/lib/postgresql/data/pgdata
     restart: always
     command: postgres -c 'max_connections=500'
+  redis:
+    container_name: node_web_app_redis
+    image: redis:7
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --save 20 1 --loglevel warning 
+    volumes:
+      - redis:/data
 volumes:
   pgdata:
+    driver: local
+  redis:
+    driver: local
