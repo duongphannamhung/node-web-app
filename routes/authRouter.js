@@ -41,4 +41,35 @@ router.post('/register',
     },  
     controller.register);
 
+router.get('/forgot', controller.showForgotPassword);
+router.post('/forgot', 
+    body('email').trim().notEmpty().withMessage('Email is required').isEmail().withMessage('Invalid email address!'),
+    (req, res, next) => {
+        let message = getErrorMessage(req);
+        if (message) {
+            return res.render('forgot-password', { message })
+        }
+        next();
+    },
+    controller.forgotPassword);
+
+router.get('/reset', controller.showResetPassword);
+router.post('/reset', 
+    body('email').trim().notEmpty().withMessage('Email is required').isEmail().withMessage('Invalid email address!'),
+    body('password').trim().notEmpty().withMessage('Password is required'),
+    body('password').matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/).withMessage('Password must be at least 8 characters and contain at least one letter and one number!'),
+    body('confirmPassword').custom((confirmPassword, {req}) => {
+        if (confirmPassword !== req.body.password) {
+            throw new Error('Password confirmation does not match password!');
+        }
+        return true;
+    }),
+    (req, res, next) => {
+        let message = getErrorMessage(req);
+        if (message) {
+            return res.render('reset-password', { message })
+        }
+        next();   
+    },  
+    controller.resetPassword);
 module.exports = router;
