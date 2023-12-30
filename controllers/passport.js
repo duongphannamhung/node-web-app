@@ -4,6 +4,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const models = require('../models');
+const { where } = require('sequelize');
 
 // ham duoc goi khi xac thuc thanh cong, luu thong tin user vao session
 passport.serializeUser((user, done) => {
@@ -53,5 +54,37 @@ passport.use('local-login', new LocalStrategy({
     }
 }))
 
+passport.use('local-register', new LocalStrategy({
+    usernameField: 'email', // ten dang nhap la email
+    passwordField: 'password',
+    passReqToCallback: true // cho phep chung ta truyen req vao callback
+}, async (req, email, password, done) => {
+    if (email) {
+        email = email.toLowerCase(); // chuyen dia chi email sang ky tu thuong
+    }   
+    if (req.user) {
+        return done(null, req.user);
+    }
+    try {
+        let user = await models.User.findOne({
+            where: { email: email}
+        })
+        if (user ) {
+            return done(null, false, req.flash('registerMessage', 'Email existed!'))
+        }
+
+        user = await models.User.create({
+            email: email,
+            password: bcrypt.hashSync(password, 8),
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            mobile: req.body.mobile,
+            isAdmin: false
+        });
+        done(null, false, req.flash('registerMessage', 'Register successfully!'));
+    } catch (error) {
+        done(error);
+    }
+}))
 
 module.exports = passport;
